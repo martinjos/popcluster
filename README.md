@@ -2,14 +2,9 @@
 
 ## Dependencies
 
-Ubuntu package: `mpikmeans-tools`; programs `mpi_kmeans`, `mpi_assign`
-Ubuntu package: `qhull-bin`; programs `qhull`, `qconvex`
-Ubuntu package: `wget` (for the example code only)
+    sudo apt install mpikmeans-tools qhull-bin  # Required dependencies
 
-## Census population data
-
-* Centroids for census output areas: http://geoportal.statistics.gov.uk/datasets/output-areas-december-2011-population-weighted-centroids
-* All UK census data can be downloaded by creating a query here: https://www.nomisweb.co.uk/ (via https://www.ons.gov.uk/)
+    sudo apt install wget  # For the example code only
 
 ## Running
 
@@ -26,18 +21,21 @@ Ubuntu package: `wget` (for the example code only)
 After running all of these commands, the directory `kmeans-kml` (created above)
 will contain the output kml files with centroids and Voronoi tesselation
 outlines. These can be imported into Google My Maps
-(https://mymaps.google.com/).
+(<https://mymaps.google.com/>).
+
+## Census population data
+
+* Centroids for census output areas (as downloaded above using `wget`): <http://geoportal.statistics.gov.uk/datasets/output-areas-december-2011-population-weighted-centroids>
+* All UK census data can be downloaded by creating a query here: <https://www.nomisweb.co.uk/> (via <https://www.ons.gov.uk/>)
 
 ## Geodesic conversion approximation
 
 * A line of latitude (north-south) is approximately 111 km, anywhere on the globe.
-* A line of longitude (east-west) is about 0.6 times this, on average, across England (this ranges from about 0.62 for London to about 0.57 for Newcastle, and is exact somewhere near Nottingham).
-* So we can multiply the longitude by 0.6 to convert lat/lon into an approximate spatial grid.
-* Then divide longitude by 0.6 to go back to lat/lon.
+* A line of longitude (east-west) is about 0.6 times this, on average, across England. This ranges from about 0.64 for Penzance to about 0.56 for Berwick-upon-Tweed, and is exactly 0.6 somewhere near Nottingham.
+* So we can multiply the longitude by 0.6 to convert lat/lon into an approximate spatial grid in units of about 111 km, then later divide longitude by 0.6 to go back to lat/lon.
 
 ## Adding point weights to k-Means input
 
 Census output areas can optionally be "weighted" by population, by creating
-duplicate points for the k-Means algorithm. Populations vary from about 100 to
-about 4,100.
-
+duplicate points for the k-Means algorithm. Populations of census output areas
+for the 2011 census vary from about 100 to about 4,100.
