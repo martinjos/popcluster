@@ -1,2 +1,4 @@
 #!/bin/bash
-for ((i=1;i<=9;i++)); do mpi_assign --cluster kmeans-output/$i.txt --assignment kmeans-assign/$i.txt --data ~/Downloads/gov.uk/populations/Output_Areas_December_2011_Population_Weighted_Centroids-kml-grid.txt ; done
+datafile="$1"
+mkdir -p kmeans-assign
+for outfile in kmeans-output/*.txt; do i=${outfile#*/}; i=${i%.*}; mpi_assign --cluster kmeans-output/$i.txt --assignment kmeans-assign/$i.txt --data "$datafile" ; done
