@@ -2,7 +2,11 @@
 
 # multiply longitude by this value to convert England to roughly rectangular
 # grid
-LonFactor = 0.6
+LonFactor = if ARGV.size > 0
+    Float(ARGV[0])
+else
+    0.6
+end
 
 STDIN.each_line do |line|
     vals = line.split(',')

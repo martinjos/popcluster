@@ -13,3 +13,5 @@ A line of longitude (east-west) is about 0.6 times this, on average, across Engl
 So we can multiply the longitude by 0.6 to convert lat/lon into an approximate spatial grid.
 Then divide longitude by 0.6 to go back to lat/lon.
 
+TODO: the output areas have populations that can vary by a factor of up to about 41. So the k-Means analysis should be weighted in some way, perhaps by duplicating points.
+
