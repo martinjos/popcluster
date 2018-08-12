@@ -11,8 +11,35 @@
 
 require 'nokogiri'
 require 'set'
+require 'optparse'
 
-(indir, outdir, assigndir, datafile) = ARGV
+indir = outdir = assigndir = datafile = nil
+
+opt = {}
+optparser = OptionParser.new do |o|
+    o.on('-k', '--kmeans DIR',
+         'k-Means centroids directory (in lon/lat)') do |v|
+        indir = v
+    end
+    o.on('-o', '--out DIR',
+         'Output directory for generated KML files') do |v|
+        outdir = v
+    end
+    o.on('-a', '--assign DIR',
+         'k-Means assignment directory') do |v|
+        assigndir = v
+    end
+    o.on('-c', '--coords FILE',
+         'k-Means input coordinates file (in lon/lat)') do |v|
+        datafile = v
+    end
+end
+optparser.parse!
+
+if !indir || !outdir
+    print optparser
+    raise 'Required arguments: -k/--kmeans, -o/--out'
+end
 
 Dir.each_child(indir) do |fname|
     k = Integer(fname.split('.')[0])
@@ -29,6 +56,7 @@ Dir.each_child(indir) do |fname|
                             end
                         end
                     end
+                    next if !assigndir || !datafile
                     (1..k).each do |i|
                         lnos = Set.new
                         File.foreach("#{assigndir}/#{fname}").each_with_index do |line, lno|
