@@ -22,13 +22,20 @@ if ! mkdir "$odir"; then
 fi
 
 centroids_csv="$sdir/uk-census-2011/centroids.csv" 
+populations_csv="$sdir/uk-census-2011/populations.csv"
 centroids_square="$odir/centroids-square.txt"
+centroids_train="$centroids_square"
 centroids_lonlat="$odir/centroids-lonlat.txt"
 kml_dir="$odir/kml"
 
+if [ $pops = yes ]; then
+    centroids_train="$odir/centroids-train.txt"
+    "$sdir"/lonscale.rb "$populations_csv" < "$centroids_csv" > "$centroids_train"
+fi
+
 "$sdir"/lonscale.rb < "$centroids_csv" > "$centroids_square"
 "$sdir"/lonscale.rb 1 < "$centroids_csv" > "$centroids_lonlat"
-"$sdir"/run-kmeans.sh "$odir" "$centroids_square" $first $last
+"$sdir"/run-kmeans.sh "$odir" "$centroids_train" $first $last
 "$sdir"/run-assign.sh "$odir" "$centroids_square"
 "$sdir"/run-loncorrect.sh "$odir"
 mkdir "$kml_dir"
