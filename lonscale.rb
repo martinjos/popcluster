@@ -16,7 +16,7 @@ end
 pops = {}
 if pfile
     CSV.foreach(pfile) do |row|
-        pops[row[0]] = Integer(row[2])
+        pops[row[0]] = row[-1].to_i
     end
 end
 
