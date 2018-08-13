@@ -14,6 +14,10 @@ After this command completes, the directory `DIRECTORY/kml` will contain the
 output kml files with centroids and Voronoi tesselation outlines. These can be
 imported into Google My Maps (<https://mymaps.google.com/>).
 
+Full options:
+
+    run-all.sh [--no-pops] OUTPUT-DIR [FIRST-K] [LAST-K]
+
 ## Adding point weights to k-Means input
 
 Census output areas are "weighted" by population, by creating duplicate points
